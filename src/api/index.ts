@@ -1,19 +1,23 @@
-import {client} from './client';
-import type {ApiResponse, Audit, Content, Job, Order, Page, User} from '@/types';
+import {login} from './auth'
+import {getDashboard} from './dashboard'
+import {resetDemoData} from './system'
 
+export * from './auth'
+export * from './billing'
+export * from './client'
+export * from './credits'
+export * from './customers'
+export * from './dashboard'
+export * from './risk'
+export * from './system'
+export * from './tickets'
+export * from './workflows'
+
+/**
+ * @deprecated 旧页面的过渡出口。新增页面请从对应领域文件导入 API。
+ */
 export const api = {
-    login: (payload: any) => client.post<any, ApiResponse<any>>('/admin/auth/login', payload),
-    dashboard: () => client.get<any, ApiResponse<any>>('/admin/dashboard'),
-    users: (params: any) => client.get<any, ApiResponse<Page<User>>>('/admin/users', {params}),
-    userStatus: (id: string, status: string) => client.patch<any, ApiResponse<User>>(`/admin/users/${id}/status`, {status}),
-    credits: (id: string, amount: number) => client.post<any, ApiResponse<User>>(`/admin/users/${id}/credits`, {amount}),
-    jobs: (params: any) => client.get<any, ApiResponse<Page<Job>>>('/admin/jobs', {params}),
-    retry: (id: string) => client.post<any, ApiResponse<Job>>(`/admin/jobs/${id}/retry`),
-    cancel: (id: string) => client.post<any, ApiResponse<Job>>(`/admin/jobs/${id}/cancel`),
-    contents: (params: any) => client.get<any, ApiResponse<Page<Content>>>('/admin/contents', {params}),
-    review: (id: string, status: string) => client.patch<any, ApiResponse<Content>>(`/admin/contents/${id}/review`, {status}),
-    orders: (params: any) => client.get<any, ApiResponse<Page<Order>>>('/admin/orders', {params}),
-    health: () => client.get<any, ApiResponse<any>>('/admin/system/health'),
-    logs: () => client.get<any, ApiResponse<Audit[]>>('/admin/audit-logs'),
-    reset: () => client.post<any, ApiResponse<any>>('/admin/demo/reset')
-};
+    login,
+    dashboard: getDashboard,
+    reset: resetDemoData,
+}

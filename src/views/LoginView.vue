@@ -11,22 +11,28 @@
         <el-form-item>
           <el-input v-model="form.password" size="large" type="password" placeholder="登录密码" show-password/>
         </el-form-item>
-        <el-button type="primary" size="large" native-type="submit" :loading="loading" class="full">一键进入演示后台
+        <el-button type="primary" size="large" native-type="submit" :loading="loading" class="full">
+          {{ isDemoMode ? '一键进入演示后台' : '登录后台' }}
         </el-button>
       </el-form>
-      <small>演示账号：admin@shopro.ai　密码任意</small></div>
+      <small v-if="isDemoMode">演示账号：admin@shopro.ai　密码任意</small></div>
   </div>
 </template>
 <script setup lang="ts">import {reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
-import {ElMessage} from 'element-plus';
+import {ElMessage} from 'element-plus/es/components/message/index.mjs';
 import {api} from '@/api';
 import {useAuthStore} from '@/stores/auth';
+import type {LoginRequest} from '@/types';
 
 const router = useRouter(), auth = useAuthStore(), loading = ref(false),
-    form = reactive({email: 'admin@shopro.ai', password: 'demo'});
+    form = reactive<LoginRequest>({
+      email: (import.meta.env.VITE_APP_MODE || 'demo') === 'demo' ? 'admin@shopro.ai' : '',
+      password: (import.meta.env.VITE_APP_MODE || 'demo') === 'demo' ? 'demo' : ''
+    });
+const isDemoMode = (import.meta.env.VITE_APP_MODE || 'demo') === 'demo'
 
-async function login() {
+async function login(): Promise<void> {
   loading.value = true;
   try {
     const r = await api.login(form);

@@ -1,73 +1,9 @@
-export type Status =
-    'active'
-    | 'disabled'
-    | 'pending'
-    | 'running'
-    | 'success'
-    | 'failed'
-    | 'cancelled'
-    | 'approved'
-    | 'rejected'
-    | 'offline'
-    | 'paid'
-    | 'unpaid'
-    | 'refunding'
-    | 'refunded';
-
-export interface User {
-    id: string;
-    name: string;
-    email: string;
-    type: string;
-    credits: number;
-    status: 'active' | 'disabled';
-    createdAt: string
-}
-
-export interface Job {
-    id: string;
-    name: string;
-    type: string;
-    status: Status;
-    progress: number;
-    createdAt: string;
-    error?: string
-}
-
-export interface Content {
-    id: string;
-    title: string;
-    type: string;
-    status: 'pending' | 'approved' | 'rejected' | 'offline';
-    author: string;
-    updatedAt: string
-}
-
-export interface Order {
-    id: string;
-    user: string;
-    plan: string;
-    amount: number;
-    status: 'paid' | 'unpaid' | 'refunding' | 'refunded';
-    createdAt: string
-}
-
-export interface Audit {
-    id: string;
-    action: string;
-    operator: string;
-    createdAt: string
-}
-
-export interface Page<T> {
-    items: T[];
-    total: number;
-    page: number;
-    pageSize: number
-}
-
-export interface ApiResponse<T> {
-    code: number;
-    message: string;
-    data: T
-}
+export * from './api'
+export * from './auth'
+export * from './billing'
+export * from './credit'
+export * from './customer'
+export * from './risk'
+export * from './system'
+export * from './ticket'
+export * from './workflow'
