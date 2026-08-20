@@ -1,1 +1,19 @@
-import {client} from './client'; import type {ApiResponse,Page,User,Job,Content,Order,Audit} from '@/types'; export const api={login:(payload:any)=>client.post<any,ApiResponse<any>>('/admin/auth/login',payload),dashboard:()=>client.get<any,ApiResponse<any>>('/admin/dashboard'),users:(params:any)=>client.get<any,ApiResponse<Page<User>>>('/admin/users',{params}),userStatus:(id:string,status:string)=>client.patch<any,ApiResponse<User>>(`/admin/users/${id}/status`,{status}),credits:(id:string,amount:number)=>client.post<any,ApiResponse<User>>(`/admin/users/${id}/credits`,{amount}),jobs:(params:any)=>client.get<any,ApiResponse<Page<Job>>>('/admin/jobs',{params}),retry:(id:string)=>client.post<any,ApiResponse<Job>>(`/admin/jobs/${id}/retry`),cancel:(id:string)=>client.post<any,ApiResponse<Job>>(`/admin/jobs/${id}/cancel`),contents:(params:any)=>client.get<any,ApiResponse<Page<Content>>>('/admin/contents',{params}),review:(id:string,status:string)=>client.patch<any,ApiResponse<Content>>(`/admin/contents/${id}/review`,{status}),orders:(params:any)=>client.get<any,ApiResponse<Page<Order>>>('/admin/orders',{params}),health:()=>client.get<any,ApiResponse<any>>('/admin/system/health'),logs:()=>client.get<any,ApiResponse<Audit[]>>('/admin/audit-logs'),reset:()=>client.post<any,ApiResponse<any>>('/admin/demo/reset')};
+import {client} from './client';
+import type {ApiResponse, Audit, Content, Job, Order, Page, User} from '@/types';
+
+export const api = {
+    login: (payload: any) => client.post<any, ApiResponse<any>>('/admin/auth/login', payload),
+    dashboard: () => client.get<any, ApiResponse<any>>('/admin/dashboard'),
+    users: (params: any) => client.get<any, ApiResponse<Page<User>>>('/admin/users', {params}),
+    userStatus: (id: string, status: string) => client.patch<any, ApiResponse<User>>(`/admin/users/${id}/status`, {status}),
+    credits: (id: string, amount: number) => client.post<any, ApiResponse<User>>(`/admin/users/${id}/credits`, {amount}),
+    jobs: (params: any) => client.get<any, ApiResponse<Page<Job>>>('/admin/jobs', {params}),
+    retry: (id: string) => client.post<any, ApiResponse<Job>>(`/admin/jobs/${id}/retry`),
+    cancel: (id: string) => client.post<any, ApiResponse<Job>>(`/admin/jobs/${id}/cancel`),
+    contents: (params: any) => client.get<any, ApiResponse<Page<Content>>>('/admin/contents', {params}),
+    review: (id: string, status: string) => client.patch<any, ApiResponse<Content>>(`/admin/contents/${id}/review`, {status}),
+    orders: (params: any) => client.get<any, ApiResponse<Page<Order>>>('/admin/orders', {params}),
+    health: () => client.get<any, ApiResponse<any>>('/admin/system/health'),
+    logs: () => client.get<any, ApiResponse<Audit[]>>('/admin/audit-logs'),
+    reset: () => client.post<any, ApiResponse<any>>('/admin/demo/reset')
+};

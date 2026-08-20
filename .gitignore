@@ -49,3 +49,7 @@ tsconfig.node.tsbuildinfo
 
 # MSW (auto-generated service worker)
 public/mockServiceWorker.js
+
+# Vite config build artifacts
+/vite.config.js
+/vite.config.d.ts
